@@ -159,6 +159,16 @@ std::string loadSpellConfig(std::string& error) {
     }
     try {
         SpellBook::fromJson(text);
+        // Older default file: keep a backup of it and install the new defaults.
+        int have = 0, want = 0;
+        json a = json::parse(text, nullptr, false), b = json::parse(SpellBook::defaultJson());
+        if (!a.is_discarded()) have = a.value("version", 0);
+        want = b.value("version", 0);
+        if (have < want) {
+            writeFile(path + L".v" + std::to_wstring(have) + L".bak", text);
+            writeFile(path, SpellBook::defaultJson());
+            return SpellBook::defaultJson();
+        }
         return text;
     } catch (const std::exception& e) {
         error = e.what();

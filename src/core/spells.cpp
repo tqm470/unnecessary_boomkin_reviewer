@@ -12,7 +12,7 @@ using nlohmann::json;
 // edited without recompiling. IDs are from the Midnight-era client; names and
 // aliases are the fallback when an ID changes.
 static const char* kDefaultSpells = R"JSON({
-  "version": 1,
+  "version": 2,
   "astral_power_resource_type": 8,
   "spells": [
     {"name": "Starfire",        "ids": [194153],         "role": "filler",   "aliases": ["Fogo Estelar"]},
@@ -61,8 +61,15 @@ static const char* kDefaultSpells = R"JSON({
     {"name": "Barkskin",        "ids": [22812],          "role": "offgcd",   "aliases": ["Pele de Árvore"]},
     {"name": "Solar Beam",      "ids": [78675],          "role": "offgcd",   "aliases": ["Raio Solar"]},
     {"name": "Renewal",         "ids": [108238],         "role": "offgcd",   "aliases": ["Renovação"]},
-    {"name": "Eclipse (Lunar)", "ids": [48518],          "role": "offgcd",   "aliases": ["Eclipse Lunar"]},
-    {"name": "Eclipse (Solar)", "ids": [48517],          "role": "offgcd",   "aliases": ["Eclipse Solar"]}
+    {"name": "Lunar Eclipse",   "ids": [1233272, 48518], "role": "offgcd",   "aliases": ["Eclipse Lunar", "Eclipse (Lunar)"]},
+    {"name": "Solar Eclipse",   "ids": [48517],          "role": "offgcd",   "aliases": ["Eclipse Solar", "Eclipse (Solar)"]},
+    {"name": "Vine Grip",       "ids": [1287798],        "role": "utility",  "aliases": ["Agarre de Vinhas"]},
+
+    {"name": "Empowering Venom", "ids": [1293316],       "role": "offgcd",   "aliases": ["Peçonha Potencializadora"]},
+    {"name": "Light's Potential", "ids": [1236616],      "role": "offgcd",   "aliases": ["Potencial da Luz"]},
+    {"name": "Potent Healing Potion", "ids": [1262857],  "role": "offgcd",   "aliases": ["Poção de Cura Potente"]},
+    {"name": "Silvermoon Health Potion", "ids": [],      "role": "offgcd",   "aliases": ["Poção de Vida de Luaprata", "Poção de Vida de Luaprata Concentrada"]},
+    {"name": "Healthstone",     "ids": [5512, 6262],     "role": "offgcd",   "aliases": ["Pedra de Vida"]}
   ]
 })JSON";
 

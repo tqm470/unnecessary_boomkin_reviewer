@@ -196,7 +196,7 @@ void WclClient::loadSpecs(ReportMeta& meta, int fightId) {
 
 std::string WclClient::events(const std::string& code, const Fight& fight, int sourceId,
                               const std::string& dataType, bool includeResources) {
-    std::string key = "events_" + code + "_" + std::to_string(fight.id) + "_" +
+    std::string key = "events2_" + code + "_" + std::to_string(fight.id) + "_" +
                       std::to_string(sourceId) + "_" + dataType;
     std::string cached;
     if (cache_.get && cache_.get(key, cached)) return cached;
@@ -234,7 +234,8 @@ query($code: String!, $fight: Int!, $source: Int!, $start: Float!, $end: Float!)
 FightData WclClient::loadFight(const ReportMeta& meta, const Fight& fight, const Actor& player,
                                int astralPowerType) {
     std::string casts = events(meta.code, fight, player.id, "Casts", true);
-    std::string res = events(meta.code, fight, player.id, "Resources", false);
+    // Without includeResources, resource events carry no Astral Power snapshot.
+    std::string res = events(meta.code, fight, player.id, "Resources", true);
     return buildFightData(meta, fight, player, casts, res, astralPowerType);
 }
 

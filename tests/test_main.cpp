@@ -290,6 +290,9 @@ static void testClientPipeline() {
     CHECK(http.urls.size() == 6);
     CHECK(http.urls[0] == "https://www.warcraftlogs.com/oauth/token");
     CHECK(http.bodies[4].find(std::to_string((long long)nextTs)) != std::string::npos);
+    // Resource events only carry Astral Power snapshots when asked for them.
+    CHECK(http.bodies[5].find("Resources") != std::string::npos);
+    CHECK(http.bodies[5].find("includeResources: true") != std::string::npos);
 
     // Second load: served entirely from cache, no HTTP.
     FightData again = c.loadFight(meta, *f, meta.players[0], 8);
