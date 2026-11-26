@@ -27,6 +27,10 @@ English and Português (Brasil).
    They are stored encrypted in Windows Credential Manager, never in a file.
 3. Paste a log link and press **Analyze** (or Enter).
 
+For a personal build you can skip step 2: copy `src/win/default_creds.example.h` to
+`src/win/default_creds.h` (gitignored), fill it in and rebuild. Values saved in Settings
+still take priority. Anyone with that exe can extract the secret, so don't share it.
+
 The **Demo** button runs two synthetic fights (a sloppy and a tidy Boomkin) without any
 network, so you can look around before setting up the API client.
 

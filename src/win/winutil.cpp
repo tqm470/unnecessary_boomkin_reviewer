@@ -98,9 +98,29 @@ void saveSettings(const AppSettings& s) {
 
 static const wchar_t* kCredTarget = L"UnnecessaryBoomkinReviewer/WarcraftLogsApi";
 
+// Optional build-time defaults for a personal build. The header is gitignored;
+// see src/win/default_creds.example.h. Settings (Credential Manager) win over these.
+#if defined(__has_include)
+#if __has_include("default_creds.h")
+#include "default_creds.h"
+#endif
+#endif
+
+static bool builtInCredentials(std::string& clientId, std::string& secret) {
+#if defined(UBR_DEFAULT_CLIENT_ID) && defined(UBR_DEFAULT_CLIENT_SECRET)
+    clientId = UBR_DEFAULT_CLIENT_ID;
+    secret = UBR_DEFAULT_CLIENT_SECRET;
+    return !clientId.empty() && !secret.empty();
+#else
+    (void)clientId;
+    (void)secret;
+    return false;
+#endif
+}
+
 bool loadCredentials(std::string& clientId, std::string& secret) {
     PCREDENTIALW cred = nullptr;
-    if (!CredReadW(kCredTarget, CRED_TYPE_GENERIC, 0, &cred)) return false;
+    if (!CredReadW(kCredTarget, CRED_TYPE_GENERIC, 0, &cred)) return builtInCredentials(clientId, secret);
     std::string blob((const char*)cred->CredentialBlob, cred->CredentialBlobSize);
     CredFree(cred);
     size_t nl = blob.find('\n');

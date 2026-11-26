@@ -3,3 +3,4 @@ build-*/
 out/
 .vs/
 *.user
+src/win/default_creds.h
